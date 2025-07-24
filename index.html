@@ -4,63 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HSE Contact List - TenarisMcCarty</title>
-    <script>
-        const companyLat = 29.7678;
-        const companyLon = -95.3102;
-        const allowedRadius = 5;
-
-        function haversineDistance(lat1, lon1, lat2, lon2) {
-            const toRad = (angle) => (Math.PI / 180) * angle;
-            const R = 6371; // Radius of Earth in kilometers
-
-            const dLat = toRad(lat2 - lat1);
-            const dLon = toRad(lon2 - lon1);
-
-            const a = Math.sin(dLat / 2) ** 2 +
-                      Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
-                      Math.sin(dLon / 2) ** 2;
-
-            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-            return R * c;
-        }
-
-        function checkLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        const userLat = position.coords.latitude;
-                        const userLon = position.coords.longitude;
-
-                        const distance = haversineDistance(companyLat, companyLon, userLat, userLon);
-
-                        const accessGranted = document.getElementById('access-granted');
-                        const accessDenied = document.getElementById('access-denied');
-
-                        if (distance <= allowedRadius) {
-                            accessGranted.style.display = 'block';
-                            accessDenied.style.display = 'none';
-                        } else {
-                            accessGranted.style.display = 'none';
-                            accessDenied.style.display = 'block';
-                        }
-                    },
-                    (error) => {
-                        console.error('Geolocation error:', error);
-                        if (error.code === error.PERMISSION_DENIED) {
-                            alert('You have denied location access. The contact list is only accessible to on‑site personnel. Please reload and allow location access.');
-                        } else {
-                            document.body.innerHTML = '<h1>Error</h1><p>Could not retrieve your location.</p>';
-                        }
-                    }
-                );
-            } else {
-                alert('Geolocation is not supported by this browser.');
-                document.body.innerHTML = '<h1>Browser Not Supported</h1><p>Please try a different browser.</p>';
-            }
-        }
-
-        window.onload = checkLocation;
-    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -106,44 +49,34 @@
             text-align: center;
             color: #555;
         }
-        #access-granted, #access-denied {
-            display: none;
-        }
     </style>
 </head>
 <body>
-    <div id="access-granted">
-        <h1>HSE Contact List - TenarisMcCarty</h1>
-        <p class="alert">In case of emergency, call 911 immediately.</p>
-        <p class="note">
-            If you cannot reach the primary contact, call the secondary contact right away.
-        </p>
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Role</th>
-                    <th>Phone Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Salil Puranik</td>
-                    <td>Environment Analyst</td>
-                    <td>***</td>
-                </tr>
-                <tr>
-                    <td>Daniel Herman</td>
-                    <td>HSE Manager</td>
-                    <td>***</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div id="access-denied">
-        <h1>403 - Forbidden</h1>
-        <p>Access restricted to on‑site personnel. Please contact your supervisor if you need assistance.</p>
-    </div>
+    <h1>HSE Contact List - TenarisMcCarty</h1>
+    <p class="alert">In case of emergency, call 911 immediately.</p>
+    <p class="note">
+        If you cannot reach the primary contact, call the secondary contact right away.
+    </p>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Phone Number</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Salil Puranik</td>
+                <td>HSE Lead</td>
+                <td>***</td>
+            </tr>
+            <tr>
+                <td>Daniel Herman</td>
+                <td>HSE Officer</td>
+                <td>***</td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>
